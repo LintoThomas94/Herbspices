@@ -56,21 +56,27 @@
               <input type="password" class="form-control" name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" required>
               <div id="error6" class="error-message"></div>
             </div>
+             <% if (locals.message && message.length > 0) { %>
+                <div class="alert alert-danger text-center">
+                  <%= message %>
+                </div>
+                <% } %>
+
             <div class="d-grid mb-3">
               <button type="submit" class="btn btn-black">Create Account</button>
             </div>
             <div class="d-grid mb-3">
-              <button type="button" class="btn btn-google d-flex align-items-center justify-content-center">
+              <a href="/auth/google" class="btn btn-google d-flex align-items-center justify-content-center">
                 <img src="/project/images/google%20sign%20in.jpg" alt="Google"> 
                 Sign up with Google
-              </button>
+              </a>
             </div>
             <p class="text-center small-text">
-              Already have an account? <a href="login.html">Log in</a>
+              Already have an account? <a href="/login">Log in</a>
             </p>
           </form>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
 

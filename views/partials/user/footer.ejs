@@ -1,128 +1,176 @@
-<footer class="py-5">
-      <div class="container-lg">
-        <div class="row">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spice Store - Premium Spices & Ingredients</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="footer-menu">
-              <img src="/project/images/Img-logo.jpeg" width="220" height="200" alt="logo">
-              <div class="social-links mt-3">
-                <ul class="d-flex list-unstyled gap-2">
-                  <li>
-                    <a href="#" class="btn btn-outline-light">
-                      <svg width="16" height="16"><use xlink:href="#facebook"></use></svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="btn btn-outline-light">
-                      <svg width="16" height="16"><use xlink:href="#twitter"></use></svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="btn btn-outline-light">
-                      <svg width="16" height="16"><use xlink:href="#youtube"></use></svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="btn btn-outline-light">
-                      <svg width="16" height="16"><use xlink:href="#instagram"></use></svg>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" class="btn btn-outline-light">
-                      <svg width="16" height="16"><use xlink:href="#amazon"></use></svg>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
 
-          <div class="col-md-2 col-sm-6">
-            <div class="footer-menu">
-              <h5 class="widget-title">Organic</h5>
-              <ul class="menu-list list-unstyled">
-                <li class="menu-item">
-                  <a href="#" class="nav-link">About us</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Conditions </a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Our Journals</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Careers</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Affiliate Programme</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Ultras Press</a>
-                </li>
-              </ul>
-            </div>
+    /* Footer Styling */
+    .footer {
+      background: #222;   /* dark footer */
+      color: #ddd;
+      padding: 90px 20px 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    /* Logo Section */
+    .footer-logo {
+      flex: 1 1 220px;
+    }
+
+    .footer-logo img {
+      height: 110px;
+      width: auto;
+      margin-bottom: 15px;
+    }
+
+    .footer-logo p {
+      font-size: 14px;
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    /* Footer Links Section */
+    .footer-sections {
+      flex: 3 1 600px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 15px;
+      font-size: 18px;
+      color: #fff;
+      border-bottom: 2px solid #d2691e; /* spice color underline */
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      text-decoration: none;
+      color: #bbb;
+      transition: 0.3s;
+      font-size: 14px;
+    }
+
+    .footer-section ul li a:hover {
+      color: #d2691e;
+      padding-left: 5px;
+    }
+
+    /* Footer Bottom */
+    .footer-bottom {
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+      border-top: 1px solid #444;
+      padding-top: 15px;
+    }
+
+    .footer-bottom a {
+      color: #d2691e;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        
+        <!-- Logo on the left -->
+        <div class="footer-logo">
+          <a href="#home">
+            <img src="/project/images/Img-logo.jpeg" alt="SpiceStore Logo">
+          </a>
+          <p>Bringing you premium spices & ingredients from around the world. Fresh, organic, and full of flavor for your kitchen.</p>
+        </div>
+
+        <!-- Links on the right -->
+        <div class="footer-sections">
+          <div class="footer-section">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Story</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+            </ul>
           </div>
-          <div class="col-md-2 col-sm-6">
-            <div class="footer-menu">
-              <h5 class="widget-title">Quick Links</h5>
-              <ul class="menu-list list-unstyled">
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Offers</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Discount Coupons</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Stores</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Track Order</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Shop</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Info</a>
-                </li>
-              </ul>
-            </div>
+          <div class="footer-section">
+            <h3>Products</h3>
+            <ul>
+              <li><a href="#">Whole Spices</a></li>
+              <li><a href="#">Ground Spices</a></li>
+              <li><a href="#">Spice Blends</a></li>
+              <li><a href="#">Organic Range</a></li>
+            </ul>
           </div>
-          <div class="col-md-2 col-sm-6">
-            <div class="footer-menu">
-              <h5 class="widget-title">Customer Service</h5>
-              <ul class="menu-list list-unstyled">
-                <li class="menu-item">
-                  <a href="#" class="nav-link">FAQ</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Contact</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Privacy Policy</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Returns & Refunds</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Cookie Guidelines</a>
-                </li>
-                <li class="menu-item">
-                  <a href="#" class="nav-link">Delivery Information</a>
-                </li>
-              </ul>
-            </div>
+          <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="#">Help Center</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Shipping Info</a></li>
+              <li><a href="#">Returns</a></li>
+            </ul>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="footer-menu">
-              <h5 class="widget-title">Subscribe Us</h5>
-              <p>Subscribe to our newsletter to get updates about our grand offers.</p>
-              <form class="d-flex mt-3 gap-0" action="index.html">
-                <input class="form-control rounded-start rounded-0 bg-light" type="email" placeholder="Email Address" aria-label="Email Address">
-                <button class="btn btn-dark rounded-end rounded-0" type="submit">Subscribe</button>
-              </form>
-            </div>
+          <div class="footer-section">
+            <h3>Connect</h3>
+            <ul>
+              <li><a href="#">Newsletter</a></li>
+              <li><a href="#">Social Media</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Reviews</a></li>
+            </ul>
           </div>
-          
         </div>
       </div>
-    </footer>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 SpiceStore. All rights reserved. | 
+          <a href="#">Privacy Policy</a> | 
+          <a href="#">Terms of Service</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

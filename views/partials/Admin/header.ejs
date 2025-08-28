@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+    
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: white;
+            border-right: 1px solid #e9ecef;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+           margin-left: 40px;
+        }
+        .logo-name{
+        font-size: 1.1rem;
+            font-weight: bold;
+            color: #8B4513;
+        }
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            border-right: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        .nav-link.active {
+            background-color: #e91e63;
+            color: white;
+            border-right-color: #c2185b;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            fill: currentColor;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        .sidebar-footer .nav-link {
+            margin-bottom: 5px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: #6c757d;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 30px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .stat-icon.users { background-color: #e3f2fd; color: #1976d2; }
+        .stat-icon.orders { background-color: #f3e5f5; color: #7b1fa2; }
+        .stat-icon.sales { background-color: #e8f5e8; color: #388e3c; }
+        .stat-icon.pending { background-color: #fff3e0; color: #f57c00; }
+
+        .stat-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Chart Section */
+        .chart-section {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+
+        .chart-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chart-filter {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #f8f9fa;
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .chart-container {
+            padding: 25px;
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            height: 400px;
+            position: relative;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%234caf50;stop-opacity:0.8" /><stop offset="100%" style="stop-color:%2381c784;stop-opacity:0.8" /></linearGradient></defs><polyline fill="none" stroke="url(%23grad)" stroke-width="3" points="50,250 100,200 150,180 200,120 250,140 300,100 350,160 400,90 450,110 500,80 550,120 600,100 650,140 700,110 750,130"/><circle cx="50" cy="250" r="4" fill="%234caf50"/><circle cx="100" cy="200" r="4" fill="%234caf50"/><circle cx="150" cy="180" r="4" fill="%234caf50"/><circle cx="200" cy="120" r="4" fill="%234caf50"/><circle cx="250" cy="140" r="4" fill="%234caf50"/><circle cx="300" cy="100" r="4" fill="%234caf50"/><circle cx="350" cy="160" r="4" fill="%234caf50"/><circle cx="400" cy="90" r="4" fill="%234caf50"/><circle cx="450" cy="110" r="4" fill="%234caf50"/><circle cx="500" cy="80" r="4" fill="%234caf50"/><circle cx="550" cy="120" r="4" fill="%234caf50"/><circle cx="600" cy="100" r="4" fill="%234caf50"/><circle cx="650" cy="140" r="4" fill="%234caf50"/><circle cx="700" cy="110" r="4" fill="%234caf50"/><circle cx="750" cy="130" r="4" fill="%234caf50"/></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .dashboard-content {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="/project/images/Img-logo.jpeg" alt="Herbs&Spices">
+                <div class="logo-name">
+                 <h2 class="brand-name">Herbs&Spices</h2>
+                </div>
+            </div>
+            
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/admin/dashboard" class="nav-link active">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/users" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M12 12c2.67 0 8 1.34 
+8 4v2H4v-2c0-2.66 5.33-4 
+8-4zm0-2a4 4 0 1 0 0-8 
+4 4 0 0 0 0 8z"/>
+
+                            </svg>
+                            Customers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/category" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M10 4H2v16h20V6H12l-2-2z"/>
+
+                            </svg>
+                            Category
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0l-7.17-7.17A2 2 0 0 1 3 12V5a2 2 0 0 1 2-2h7a2 2 0 0 1 1.41.59l7.17 7.17a2 2 0 0 1 0 2.83zM7 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>
+
+                            </svg>
+                            Brands
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M7 18c-1.1 0-1.99.9-1.99 
+2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 
+0c-1.1 0-1.99.9-1.99 2s.89 2 
+1.99 2 2-.9 2-2-.9-2-2-2zM7.16 
+14l.84-2h7.45a2 2 0 0 0 
+1.92-1.44l1.54-5.15A1 1 0 0 0 
+18 4H5.21l-.94-2H1v2h2l3.6 
+7.59-1.35 2.44A2 2 0 0 0 5 16a2 
+2 0 0 0 2.16-2zm9.84-6l-1.1 
+4H8.53l-1.1-4H17zM20 10h-2V8h-2v2h-2v2h2v2h2v-2h2v-2z"/>
+
+                            </svg>
+                            Add product
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M4 8l8-5 8 5v10l-8 5-8-5V8zm8-3.47L6.76 
+8 12 11.47 17.24 8 12 4.53zM6 
+10.76V16l6 3.47V14.24L6 10.76zm12 
+0l-6 3.48v5.23L18 16v-5.24z"/>
+
+                            </svg>
+                            Product
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M21 5H3c-1.1 0-2 .9-2 
+2v3a2 2 0 0 0 2 2 2 2 0 0 1 0 
+4 2 2 0 0 0-2 2v3c0 1.1.9 2 2 
+2h18c1.1 0 2-.9 2-2v-3a2 2 0 0 
+0-2-2 2 2 0 0 1 0-4 2 2 0 0 
+0 2-2V7c0-1.1-.9-2-2-2z"/>
+
+                            </svg>
+                            Coupon
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M4 4h16v10l-8-4-8 4V4zM4 20h2v-2H4v2z"/>
+
+                            </svg>
+                            Banner
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <svg class="nav-icon" viewBox="0 0 24 24">
+                                <path d="M6 2l1.5 4h9L18 
+2h2v2h-2.1l-1.83 12.39A2 
+2 0 0 1 14.1 18H9.9a2 2 
+0 0 1-1.97-1.61L6.1 4H4V2h2zM12 
+9a2 2 0 1 1 0 4 2 2 0 0 
+1 0-4z"/>
+
+                            </svg>
+                            Orders
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- <div class="sidebar-footer">
+                <a href="#" class="nav-link">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.82,11.69,4.82,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                    </svg>
+                    Settings
+                </a> -->
+                <a href="/admin/logout" class="nav-link">
+                    <svg class="nav-icon" viewBox="0 0 24 24">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                    Logout
+                </a>
+            </div>
+        </aside>
+        
+
+        

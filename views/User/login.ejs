@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Login Page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Male-Fashion</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #f8f9fa;
+        font-family: "Nunito Sans", sans-serif;
+      }
+      .login-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .login-image {
+        background: url("/project/images/signup page img.jpg") center/cover
+          no-repeat;
+        min-height: 100%;
+      }
+      .login-form {
+        padding: 2rem;
+      }
+      .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+      }
+      .social-btn img {
+        width: 22px;
+        height: 22px;
+      }
+      .error-message {
+        font-size: 0.8rem;
+        color: red;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+      <div class="card login-card w-100" style="max-width: 900px">
+        <div class="row g-0">
+          <!-- Left: Login Form -->
+          <div class="col-md-6 d-flex flex-column justify-content-center">
+            <div class="login-form">
+              <h3 class="text-center mb-4">Login</h3>
+              <form id="loginform" method="post" action="/login" novalidate>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email address</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Enter email"
+                    required
+                  />
+                  <div id="error1" class="error-message"></div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                  />
+                  <div id="error2" class="error-message"></div>
+                </div>
+
+                <% if (locals.message && message.length > 0) { %>
+                <div class="alert alert-danger text-center">
+                  <%= message %>
+                </div>
+                <% } %>
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">
+                    Log In
+                  </button>
+                </div>
+
+                <p class="text-center my-3">or</p>
+
+                <div class="d-grid">
+                  <a href="/auth/google" class="btn btn-outline-danger social-btn">
+                    <img src="/project/images/google sign in.jpg" alt="Google Logo" />
+                    Continue with Google
+                  </a>
+                </div>
+              </form>
+
+              <p class="text-center mt-4">
+                Not registered?
+                <a href="/signup" class="fw-bold text-decoration-none"
+                  >Sign Up</a
+                >
+              </p>
+            </div>
+          </div>
+
+          <!-- Right: Image -->
+          <div class="col-md-6 d-none d-md-block login-image"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      const emailid = document.getElementById("email");
+      const passid = document.getElementById("password");
+      const error1 = document.getElementById("error1");
+      const error2 = document.getElementById("error2");
+      const loginform = document.getElementById("loginform");
+
+      function emailValidateChecking() {
+        const emailval = emailid.value;
+        const emailpattern =
+          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+        if (!emailpattern.test(emailval)) {
+          error1.style.display = "block";
+          error1.innerHTML = "Invalid email format";
+        } else {
+          error1.style.display = "none";
+        }
+      }
+
+      function passValidateChecking() {
+        const passval = passid.value;
+        if (passval.length < 8) {
+          error2.style.display = "block";
+          error2.innerHTML = "Password must be at least 8 characters";
+        } else {
+          error2.style.display = "none";
+        }
+      }
+
+      loginform.addEventListener("submit", function (e) {
+        emailValidateChecking();
+        passValidateChecking();
+
+        if (error1.style.display === "block" || error2.style.display === "block") {
+          e.preventDefault();
+        }
+      });
+    </script>
+  </body>
+</html>
