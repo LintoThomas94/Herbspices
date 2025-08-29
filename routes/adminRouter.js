@@ -6,8 +6,6 @@ const categorycontroller = require("../controllers/admin/categorycontrller");
 const {userAuth,adminAuth} =require("../middlewares/Auth");
 
 
-
-
 router.get("/pageerror",admincontroller.pageerror);
 
 //login management
@@ -27,6 +25,9 @@ router.get("/unblockcustomer",adminAuth,customercontroller.customerunBlocked);
 
 router.get("/category",adminAuth,categorycontroller.categoryInfo);
 router.post("/addCategory",adminAuth,categorycontroller.addCategory);
-
+router.post("/addCategoryOffer",adminAuth,categorycontroller.addCategoryOffer);
+router.post("/removeCategoryOffer",adminAuth,categorycontroller.removeCategoryOffer);
+router.get("/listCategory",adminAuth,categorycontroller.listCategory);
+router.get("/unlistCategory",adminAuth,categorycontroller.unlistCategory);
 
 module.exports = router;
