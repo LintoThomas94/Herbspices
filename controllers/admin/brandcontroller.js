@@ -23,6 +23,7 @@ const getBrandPage = async (req, res) => {
   error: null,
 });
 
+
   } catch (error) {
     console.error("Error loading brands:", error.message);
     res.redirect("/admin/pageerror");

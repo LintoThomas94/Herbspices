@@ -11,8 +11,9 @@ description:{
     required:true
 },
 brand:{
-    type:String,
-    required:true
+    type: Schema.Types.ObjectId,
+    required:true,
+    ref: "Brand"
 },
 category:{
     type:Schema.Types.ObjectId,
@@ -35,7 +36,7 @@ quantity:{
     type:Number,
     default:true
 },
-color:{
+weight:{
     type:String,
     required:true
 },

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Market - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #FFEB3B;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-right: 20px;
+        }
+        
+        .search-bar input {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            width: 250px;
+        }
+        
+        .search-bar button {
+            padding: 8px 15px;
+            background: #FF5722;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .cart-icon {
+            color: white;
+            font-size: 20px;
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF5722;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #FF5722;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #E64A19;
+            transform: translateY(-2px);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4CAF50;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #FF5722;
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FF5722;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .current-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+        
+        .original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        
+        .discount {
+            background: #FFEB3B;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: #388E3C;
+        }
+        
+        /* Category Tags */
+        .category-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-tag {
+            background: #E8F5E9;
+            color: #4CAF50;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-tag:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2E7D32;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #FFEB3B;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #E8F5E9;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #FFEB3B;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: #FFEB3B;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin: 20px 0;
+            }
+            
+            .search-bar input {
+                width: 180px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-bar {
+                margin-right: 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-pepper-hot"></i>
+                    Spice Market
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search for spices...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Discover the Finest Spices</h1>
+            <p>From farm to your kitchen - experience the authentic flavors with our premium quality spices</p>
+            <a href="#" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Flash Sales Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Flash Sale</h2>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">SALE</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Organic Turmeric Powder</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;199</span>
+                            <span class="original-price">&#8377;249</span>
+                            <span class="discount">20% OFF</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">SALE</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Premium Cinnamon Sticks</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;299</span>
+                            <span class="original-price">&#8377;399</span>
+                            <span class="discount">25% OFF</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">SALE</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Red Chili Powder</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;149</span>
+                            <span class="original-price">&#8377;199</span>
+                            <span class="discount">25% OFF</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1591768575198-88dac53fbd0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">SALE</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Whole Black Pepper</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;179</span>
+                            <span class="original-price">&#8377;229</span>
+                            <span class="discount">22% OFF</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Tags -->
+            <div class="category-tags">
+                <a href="#" class="category-tag">Whole Spices</a>
+                <a href="#" class="category-tag">Ground Spices</a>
+                <a href="#" class="category-tag">Spice Blends</a>
+                <a href="#" class="category-tag">Organic Spices</a>
+                <a href="#" class="category-tag">Exotic Spices</a>
+                <a href="#" class="category-tag">Herbs</a>
+            </div>
+        </div> 
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="section" style="background: #f8f8f8;">
+        <div class="container">
+            <h2 class="section-title">New Arrivals</h2>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1626804475297-9a6e6f12c0a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">NEW</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Saffron Threads</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;899</span>
+                            <span class="original-price">&#8377;999</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1602548585393-2f5d4cef4f15?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">NEW</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Star Anise</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;249</span>
+                            <span class="original-price">&#8377;299</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1596357395216-3fe21171e7a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">NEW</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Cardamom Pods</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;349</span>
+                            <span class="original-price">&#8377;399</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1615485290382-441e4d049cb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                        <div class="new-badge">NEW</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Vanilla Beans</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;499</span>
+                            <span class="original-price">&#8377;599</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Selling Products -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Best Selling Products</h2>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Organic Turmeric Powder</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;199</span>
+                            <span class="original-price">&#8377;249</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1571330735066-03aaa9429d89?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Premium Cinnamon Sticks</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;299</span>
+                            <span class="original-price">&#8377;399</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Red Chili Powder</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;149</span>
+                            <span class="original-price">&#8377;199</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1591768575198-88dac53fbd0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">Whole Black Pepper</div>
+                        <div class="product-price">
+                            <span class="current-price">&#8377;179</span>
+                            <span class="original-price">&#8377;229</span>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Spice Market</h3>
+                    <p>Your one-stop destination for premium quality spices from around the world. We bring authenticity and flavor to your kitchen.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Spice Street, Mumbai</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@spicemarket.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Spice Market. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

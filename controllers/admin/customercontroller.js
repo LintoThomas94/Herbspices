@@ -35,7 +35,7 @@ const customerInfo = async (req, res) => {
       
     }).countDocuments();
 
-    // ✅ pass "data" to EJS
+    //  pass data to EJS
     res.render("customers", {
       data: userData,
       totalPages: Math.ceil(count / limit),

@@ -149,7 +149,7 @@ const deleteCategory = async (req, res) => {
         // Permanently delete all products in this category
         await Product.deleteMany({ category: categoryId });
 
-        // Permanently delete the category itself
+        // Permanently delete the category 
         await Category.findByIdAndDelete(categoryId);
 
         res.json({ success: true, message: "Category and its products deleted successfully" });
@@ -162,7 +162,7 @@ const deleteCategory = async (req, res) => {
 // geteditCategory
 const geteditCategory = async (req, res) => {
     try {
-        const id = req.params.id; // 👈 use params, not query
+        const id = req.params.id; 
         const category = await Category.findById(id);
         if (!category) {
             return res.redirect("/pageerror");

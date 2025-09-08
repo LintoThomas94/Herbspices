@@ -1,33 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brands Management</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-<style>
-  :root {
-    --primary-color: #7f56da;
-    --secondary-color: #e9eefc;
-    --accent-color: #50e3c2;
-    --card-bg: rgba(255,255,255,0.85);
-    --glass-bg: rgba(255,255,255,0.55);
-    --text-color: #23204a;
-    --border-color: #e0e0e0;
-    --shadow-color: rgba(127,86,218,0.10);
-    --success-color: #43b581;
-    --danger-color: #e6536f;
-    --table-head: linear-gradient(90deg, #f6e6ff 0%, #e9eefc 100%);
-  }
-  body {
-    background: linear-gradient(120deg,#f5f6fa 0%, #e7daff 100%);
-    color: var(--text-color);
-    font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  }
-  /* Fixed Header Styles */
+  <style>
+    :root {
+      --primary-color: #7f56da;
+      --secondary-color: #e9eefc;
+      --accent-color: #50e3c2;
+      --card-bg: rgba(255,255,255,0.85);
+      --glass-bg: rgba(255,255,255,0.55);
+      --text-color: #23204a;
+      --border-color: #e0e0e0;
+      --shadow-color: rgba(127,86,218,0.10);
+      --success-color: #43b581;
+      --danger-color: #e6536f;
+      --table-head: linear-gradient(90deg, #f6e6ff 0%, #e9eefc 100%);
+    }
+    body {
+      background: linear-gradient(120deg,#f5f6fa 0%, #e7daff 100%);
+      color: var(--text-color);
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    }
+    /* Fixed Header Styles */
     .header {
-      position: fixed; /* Make the header stick to the top */
+      position: fixed;
       top: 0;
       left: 0;
-      width: calc(100% - 220px); /* Adjust for the fixed sidebar */
-      height: 90px; /* Give the header a fixed height */
+      width: calc(100% - 220px);
+      height: 90px;
       background: white;
-      z-index: 1000; /* Ensure the header is always on top */
+      z-index: 1000;
       padding: 8px 20px;
       display: flex;
       justify-content: space-between;
@@ -51,126 +60,137 @@
     .search-btn svg { fill: #ffffff; }
 
 
-  .content-main { margin-top: 0; }
-  .glass-card {
-    background: var(--card-bg);
-    border-radius: 18px;
-    box-shadow: 0 8px 32px 0 var(--shadow-color);
-    border: 1px solid var(--border-color);
-    padding: 2.7em 2.1em 2.1em 2.3em;
-    display: flex;
-    gap: 2.2em;
-    align-items: flex-start;
-  }
-  .brand-form-container {
-    flex: 1 1 28%;
-    margin-right: 1em;
-    min-width: 260px;
-    background: var(--glass-bg);
-    border-radius: 14px;
-    padding: 2rem 1.3rem 2.2rem 1.3rem;
-    box-shadow: 0 4px 28px 0 rgba(127,86,218,0.045);
-  }
-  .form-group { margin-bottom: 2rem; }
-  .form-label {
-    font-weight: 700; margin-bottom: 0.6rem; color: var(--primary-color); font-size: 1.09rem; display: block;
-    letter-spacing: 0.01em;
-  }
-  .form-control-input {
-    width: 100%; padding: 0.98rem 1rem; border: 1.5px solid #ddd; border-radius: 9px;
-    font-size: 1rem; outline:none; transition:.23s border;
-    background: #fcfcfe;
-    color: var(--text-color);
-  }
-  .form-control-input:focus { border-color: var(--primary-color); }
-  .input-upload { display: flex; align-items: center; gap: 1.2rem; }
-  #image-preview {
-    width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
-    border: 2.5px solid var(--primary-color); background-color: var(--secondary-color);
-    box-shadow:0 1px 8px 0 rgba(127,86,218,.04);
-  }
-  .btn-primary-custom {
-    background: linear-gradient(90deg,#8458ec,#50e3c2 90%);
-    color: #fff; padding: 0.85rem 1.7rem; border-radius: 10px; border: none; cursor:pointer;
-    font-size: 1.05rem; font-weight: 600; box-shadow: 0 2px 8px #bba3ff23; transition:.22s background;
-    text-shadow: 0 0.4px 0 #6c63ffb8;
-  }
-  .btn-primary-custom:hover { background: linear-gradient(90deg,#8751c1 0%, #36d6a5 100%); }
-  .table-responsive-custom {
-    min-width:300px;
-    flex: 2 1 55%;
-    margin-left: 1em;
-    border-radius: 13px;
-    overflow-x:auto;
-    background:var(--glass-bg);
-    box-shadow:0 8px 32px 0 rgba(127,86,218,0.02);
-  }
-  .brand-table {
-    width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; background: none;
-  }
-  .brand-table thead th {
-    background: var(--table-head); font-weight: 700;
-    color: var(--primary-color); border-bottom: 2.5px solid #ede9fd; font-size: 1.01rem; letter-spacing: 0.06em;
-    padding-top: 1.3em; padding-bottom: 1.1em; text-align: left;
-  }
-  .brand-table td {
-    padding: 1em 1em; border-bottom: 1px solid var(--secondary-color); font-size: 1.08em;
-    background: none; color: var(--text-color);
-  }
-  .brand-logo-img {
-    width: 46px; height:46px; border-radius: 50%; object-fit: cover; border: 2px solid #ede9fd;
-    box-shadow:0 0.9px 3px #bba3ff1f;
-  }
-  .status-badge {
-    padding: 0.38em 0.95em; border-radius: 60px; font-weight: 700; font-size: 0.92rem;
-    letter-spacing: 0.005em;
-  }
-  .badge-success {
-    background-color: #edfcf4; color: var(--success-color); border: 1px solid #b6f6d8;
-  }
-  .badge-danger {
-    background-color: #fff2f3; color: var(--danger-color); border: 1px solid #ffcacc;
-  }
-  .action-buttons { display: flex; gap: 0.6rem; align-items: center; }
-  .btn-action {
-    padding: 0.53rem 1.1rem; border-radius: 8px; text-decoration: none; color: #fff;
-    font-size: .97rem; font-weight: 600; border:none; transition: .18s;
-    box-shadow: 0 1px 4px #8458ec13;
-    outline: none;
-  }
-  .btn-block { background: linear-gradient(91deg, #e6536f 70%, #ff637e 100%); }
-  .btn-block:hover { background: #c82333; }
-  .btn-unblock { background: linear-gradient(90deg,#30c974 10%, #50e3c2 100%); }
-  .btn-unblock:hover { background: #218838; }
-  .btn-delete { background: #6c757d; }
-  .btn-delete:hover { background: #4a4e54; }
-  .pagination-container { display:flex;justify-content:center; margin-top:2.5rem; }
-  .pagination {
-    box-shadow:0 2px 12px #ece1ff34;
-    display:flex;gap:1rem;background:var(--glass-bg);padding:0.8em 2.7em;border-radius:14px;
-  }
-  .pagination-link, .current-page {
-    display:inline-flex; justify-content:center; align-items:center; width:40px;height:40px;
-    border-radius:10px; border:1.5px solid var(--border-color); text-decoration:none; color:#7c63f0;
-    font-weight:500;font-size:1.07em;background:#fafbff; box-shadow:0 0.5px 2.5px #a96af31b;
-    transition:background .19s,color .18s;
-  }
-  .pagination-link:hover { background: var(--primary-color); color: #fff;}
-  .current-page {
-    background: linear-gradient(90deg, #8458ec 2%, #50e3c2 100%);
-    color:#fff; border-color:var(--primary-color);
-    box-shadow: 0 0 8px #bba3ff1c;
-    font-weight:600;
-  }
-</style>
+    .content-main { margin-top: 0; }
+    .glass-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 var(--shadow-color);
+      border: 1px solid var(--border-color);
+      padding: 2.7em 2.1em 2.1em 2.3em;
+      display: flex;
+      gap: 2.2em;
+      align-items: flex-start;
+    }
+    .brand-form-container {
+      flex: 1 1 28%;
+      margin-right: 1em;
+      min-width: 260px;
+      background: var(--glass-bg);
+      border-radius: 14px;
+      padding: 2rem 1.3rem 2.2rem 1.3rem;
+      box-shadow: 0 4px 28px 0 rgba(127,86,218,0.045);
+    }
+    .form-group { margin-bottom: 2rem; }
+    .form-label {
+      font-weight: 700; margin-bottom: 0.6rem; color: var(--primary-color); font-size: 1.09rem; display: block;
+      letter-spacing: 0.01em;
+    }
+    .form-control-input {
+      width: 100%; padding: 0.98rem 1rem; border: 1.5px solid #ddd; border-radius: 9px;
+      font-size: 1rem; outline:none; transition:.23s border;
+      background: #fcfcfe;
+      color: var(--text-color);
+    }
+    .form-control-input:focus { border-color: var(--primary-color); }
+    .input-upload { display: flex; align-items: center; gap: 1.2rem; }
+    #image-preview {
+      width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
+      border: 2.5px solid var(--primary-color); background-color: var(--secondary-color);
+      box-shadow:0 1px 8px 0 rgba(127,86,218,.04);
+    }
+    .btn-primary-custom {
+      background: linear-gradient(90deg,#8458ec,#50e3c2 90%);
+      color: #fff; padding: 0.85rem 1.7rem; border-radius: 10px; border: none; cursor:pointer;
+      font-size: 1.05rem; font-weight: 600; box-shadow: 0 2px 8px #bba3ff23; transition:.22s background;
+      text-shadow: 0 0.4px 0 #6c63ffb8;
+    }
+    .btn-primary-custom:hover { background: linear-gradient(90deg,#8751c1 0%, #36d6a5 100%); }
+    .table-responsive-custom {
+      min-width:300px;
+      flex: 2 1 55%;
+      margin-left: 1em;
+      border-radius: 13px;
+      overflow-x:auto;
+      background:var(--glass-bg);
+      box-shadow:0 8px 32px 0 rgba(127,86,218,0.02);
+    }
+    .brand-table {
+      width: 100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; background: none;
+    }
+    .brand-table thead th {
+      background: var(--table-head); font-weight: 700;
+      color: var(--primary-color); border-bottom: 2.5px solid #ede9fd; font-size: 1.01rem; letter-spacing: 0.06em;
+      padding-top: 1.3em; padding-bottom: 1.1em; text-align: left;
+    }
+    .brand-table td {
+      padding: 1em 1em; border-bottom: 1px solid var(--secondary-color); font-size: 1.08em;
+      background: none; color: var(--text-color);
+    }
+    .brand-logo-img {
+      width: 46px; height:46px; border-radius: 50%; object-fit: cover; border: 2px solid #ede9fd;
+      box-shadow:0 0.9px 3px #bba3ff1f;
+    }
+    .status-badge {
+      padding: 0.38em 0.95em; border-radius: 60px; font-weight: 700; font-size: 0.92rem;
+      letter-spacing: 0.005em;
+    }
+    .badge-success {
+      background-color: #edfcf4; color: var(--success-color); border: 1px solid #b6f6d8;
+    }
+    .badge-danger {
+      background-color: #fff2f3; color: var(--danger-color); border: 1px solid #ffcacc;
+    }
+    .action-buttons { display: flex; gap: 0.6rem; align-items: center; }
+    .btn-action {
+      padding: 0.53rem 1.1rem; border-radius: 8px; text-decoration: none; color: #fff;
+      font-size: .97rem; font-weight: 600; border:none; transition: .18s;
+      box-shadow: 0 1px 4px #8458ec13;
+      outline: none;
+      cursor: pointer;
+    }
+    .btn-block { background: linear-gradient(91deg, #e6536f 70%, #ff637e 100%); }
+    .btn-block:hover { background: #c82333; }
+    .btn-unblock { background: linear-gradient(90deg,#30c974 10%, #50e3c2 100%); }
+    .btn-unblock:hover { background: #218838; }
+    .btn-delete { background: #6c757d; }
+    .btn-delete:hover { background: #4a4e54; }
+    .pagination-container { display:flex;justify-content:center; margin-top:2.5rem; }
+    .pagination {
+      box-shadow:0 2px 12px #ece1ff34;
+      display:flex;gap:1rem;background:var(--glass-bg);padding:0.8em 2.7em;border-radius:14px;
+    }
+    .pagination-link, .current-page {
+      display:inline-flex; justify-content:center; align-items:center; width:40px;height:40px;
+      border-radius:10px; border:1.5px solid var(--border-color); text-decoration:none; color:#7c63f0;
+      font-weight:500;font-size:1.07em;background:#fafbff; box-shadow:0 0.5px 2.5px #a96af31b;
+      transition:background .19s,color .18s;
+    }
+    .pagination-link:hover { background: var(--primary-color); color: #fff;}
+    .current-page {
+      background: linear-gradient(90deg, #8458ec 2%, #50e3c2 100%);
+      color:#fff; border-color:var(--primary-color);
+      box-shadow: 0 0 8px #bba3ff1c;
+      font-weight:600;
+    }
+    
+    /* No results message */
+    .no-results {
+      text-align: center;
+      padding: 20px;
+      color: #6c757d;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
 <%- include("../../views/partials/admin/header") %>
 <main class="main-content">
     <!-- Header -->
     <header class="header">
       <h1 class="page-title">Brands</h1>
       <div class="search-container">
-        <input type="text" class="search-input" placeholder="Search ...">
-        <button class="search-btn">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by brand name...">
+        <button type="button" class="search-btn" onclick="searchBrands()">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
             <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 
                      16 11.11 16 9.5 16 5.91 13.09 3 
@@ -185,12 +205,14 @@
         </button>
       </div>
     </header>
+    
+    <div class="glass-card">
       <!-- Add Brand Form -->
       <div class="brand-form-container">
         <% if (error) { %>
           <p style="color: var(--danger-color);margin-bottom:1rem;font-weight:600;"><%= error %></p>
         <% } %>
-        <form method="post" action="/admin/addBrand" enctype="multipart/form-data">
+        <form id="brandForm" method="post" action="/admin/addBrand" enctype="multipart/form-data" onsubmit="return validateBrandForm(event)">
           <div class="form-group">
             <label for="brand_name" class="form-label">Brand Name</label>
             <input type="text" name="name" id="brand_name" placeholder="Type here" class="form-control-input" required/>
@@ -198,7 +220,7 @@
           <div class="form-group">
             <label for="brand_image" class="form-label">Brand Image</label>
             <div class="input-upload">
-              <img id="image-preview" src="" alt="Image Preview"/>
+              <img id="image-preview" src="/placeholder-image.jpg" alt="Image Preview"/>
               <input class="form-control-input" name="image" id="brand_image" type="file" onchange="previewImage(event)" required/>
             </div>
           </div>
@@ -219,10 +241,10 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="brandsTableBody">
             <% if (data.length > 0) { %>
               <% data.forEach((brand) => { %>
-                <tr>
+                <tr class="brand-row" data-name="<%= brand.name.toLowerCase() %>">
                   <td style="font-weight:600; letter-spacing:.03em;"><%= brand.name %></td>
                   <td><img src="<%= brand.image %>" alt="Brand Logo" class="brand-logo-img"/></td>
                   <td>
@@ -235,11 +257,11 @@
                   <td>
                     <div class="action-buttons">
                       <% if (brand.isBlocked) { %>
-                        <a href="/admin/listBrand?id=<%= brand._id %>" class="btn-action btn-unblock"><i class="bi bi-unlock"></i> Unblock</a>
+                        <button onclick="confirmAction('unblock', '<%= brand._id %>', '<%= brand.name %>')" class="btn-action btn-unblock"><i class="bi bi-unlock"></i> Unblock</button>
                       <% } else { %>
-                        <a href="/admin/unlistBrand?id=<%= brand._id %>" class="btn-action btn-block"><i class="bi bi-lock"></i> Block</a>
+                        <button onclick="confirmAction('block', '<%= brand._id %>', '<%= brand.name %>')" class="btn-action btn-block"><i class="bi bi-lock"></i> Block</button>
                       <% } %>
-                      <a href="/admin/deleteBrand?id=<%= brand._id %>" onclick="return confirm('Delete this brand?')" class="btn-action btn-delete"><i class="bi bi-trash"></i> Delete</a>
+                      <button onclick="confirmDelete('<%= brand._id %>', '<%= brand.name %>')" class="btn-action btn-delete"><i class="bi bi-trash"></i> Delete</button>
                     </div>
                   </td>
                 </tr>
@@ -249,10 +271,13 @@
             <% } %>
           </tbody>
         </table>
+        <div id="noResults" class="no-results" style="display: none;">
+          No brands found matching your search.
+        </div>
       </div>
     </div>
     <!-- Pagination -->
-    <div class="pagination-container">
+    <div class="pagination-container" id="paginationContainer">
       <div class="pagination">
         <% for(let i = 1; i <= totalPage; i++) { %>
           <% if (i === currentPage) { %>
@@ -263,10 +288,19 @@
         <% } %>
       </div>
     </div>
-  </section>
 </main>
 
 <script>
+  // Store original brand data for search functionality
+  const originalBrands = [];
+  document.querySelectorAll('.brand-row').forEach(row => {
+    originalBrands.push({
+      element: row,
+      name: row.getAttribute('data-name')
+    });
+  });
+
+  // Image preview function
   function previewImage(event) {
     const reader = new FileReader();
     reader.onload = function() {
@@ -274,4 +308,118 @@
     };
     reader.readAsDataURL(event.target.files[0]);
   }
+
+  // Search functionality
+  function searchBrands() {
+    const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+    const noResults = document.getElementById('noResults');
+    const paginationContainer = document.getElementById('paginationContainer');
+    
+    if (searchTerm) {
+      // Hide pagination when searching
+      paginationContainer.style.display = 'none';
+      
+      let foundResults = false;
+      
+      // Filter brands
+      originalBrands.forEach(brand => {
+        const matches = brand.name.includes(searchTerm);
+        
+        if (matches) {
+          brand.element.style.display = '';
+          foundResults = true;
+        } else {
+          brand.element.style.display = 'none';
+        }
+      });
+      
+      // Show no results message if needed
+      if (!foundResults) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    } else {
+      // Show all brands and pagination when search is empty
+      originalBrands.forEach(brand => {
+        brand.element.style.display = '';
+      });
+      noResults.style.display = 'none';
+      paginationContainer.style.display = 'flex';
+    }
+  }
+
+  // Allow pressing Enter to search
+  document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      searchBrands();
+    }
+  });
+
+  // Clear search when input is cleared
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    if (e.target.value === '') {
+      searchBrands();
+    }
+  });
+
+  // Block/Unblock confirmation
+  function confirmAction(action, brandId, brandName) {
+    const actionText = action === 'block' ? 'Block' : 'Unblock';
+    const actionUrl = action === 'block' 
+      ? `/admin/unlistBrand?id=${brandId}` 
+      : `/admin/listBrand?id=${brandId}`;
+    
+    Swal.fire({
+      title: `${actionText} Brand?`,
+      text: `Are you sure you want to ${actionText.toLowerCase()} ${brandName}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: action === 'block' ? '#e6536f' : '#43b581',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: `Yes, ${actionText} it!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = actionUrl;
+      }
+    });
+  }
+
+  // Delete confirmation
+  function confirmDelete(brandId, brandName) {
+    Swal.fire({
+      title: 'Delete Brand?',
+      text: `Are you sure you want to delete ${brandName}? This action cannot be undone!`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#e6536f',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `/admin/deleteBrand?id=${brandId}`;
+      }
+    });
+  }
+
+  // Form validation to prevent duplicates
+  function validateBrandForm(event) {
+    const brandName = document.getElementById('brand_name').value.trim();
+    const existingBrands = originalBrands.map(brand => brand.name);
+    
+    if (existingBrands.includes(brandName.toLowerCase())) {
+      event.preventDefault();
+      Swal.fire({
+        title: 'Duplicate Brand',
+        text: `A brand with the name "${brandName}" already exists. Please choose a different name.`,
+        icon: 'error',
+        confirmButtonColor: '#7f56da'
+      });
+      return false;
+    }
+    
+    return true;
+  }
 </script>
+</body>
+</html>

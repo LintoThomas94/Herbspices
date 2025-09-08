@@ -1,173 +1,662 @@
-
 <%- include("../../views/partials/user/header") %>
 
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Market - Complete CSS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 40px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #4CAF50;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #FF5722;
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image a {
+            display: block;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .default-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .default-img {
+            transform: scale(1.05);
+        }
+        
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FF5722;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .current-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+        
+        .original-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        
+        .discount {
+            background: #FFEB3B;
+            color: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: #388E3C;
+        }
+        
+        /* Category Tags */
+        .category-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .category-tag {
+            background: #E8F5E9;
+            color: #4CAF50;
+            padding: 8px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-tag:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Slider Styles */
+        .hero {
+            position: relative;
+            margin: 2px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .hero__slider {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        
+        .hero__items {
+            height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            padding: 0 50px;
+        }
+        
+        /* Slide backgrounds */
+        .slide-1 {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                       url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+        }
+        
+        .slide-2 {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                       url('https://images.unsplash.com/photo-1596357395216-3fe21171e7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+        }
+        
+        .slide-3 {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                       url('https://images.unsplash.com/photo-1576503918360-4f848ba1272a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+        }
+        
+        .slide-4 {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                       url('https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80');
+        }
+        
+        .hero__text {
+            position: relative;
+            z-index: 1;
+            color: white;
+            max-width: 500px;
+        }
+        
+        .hero__text h6 {
+            font-size: 18px;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero__text h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+        }
+        
+        .hero__text p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 400px;
+        }
+        
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            background: #D35400;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
+        }
+        
+        .primary-btn:hover {
+            background: #E67E22;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(211, 84, 0, 0.4);
+        }
+        
+        .arrow_right {
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .primary-btn:hover .arrow_right {
+            transform: translateX(5px);
+        }
+        
+        /* Spice elements overlay */
+        .spice-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .spice-element {
+            position: absolute;
+            opacity: 0.2;
+        }
+        
+        .spice-1 {
+            top: 20%;
+            right: 10%;
+            font-size: 80px;
+            color: #FFD700;
+            transform: rotate(25deg);
+        }
+        
+        .spice-2 {
+            bottom: 15%;
+            left: 8%;
+            font-size: 60px;
+            color: #C0392B;
+            transform: rotate(-15deg);
+        }
+        
+        .spice-3 {
+            top: 10%;
+            left: 15%;
+            font-size: 50px;
+            color: #F39C12;
+            transform: rotate(10deg);
+        }
+        
+        /* Owl Carousel Dots Customization */
+        .owl-carousel .owl-dots {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .owl-carousel .owl-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .owl-carousel .owl-dot.active {
+            background: #D35400;
+            transform: scale(1.3);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero__items {
+                height: 450px;
+            }
+            
+            .hero__text h2 {
+                font-size: 42px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero__items {
+                height: 400px;
+                padding: 0 40px;
+            }
+            
+            .hero__text h2 {
+                font-size: 36px;
+            }
+            
+            .hero__text p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .hero {
+                margin: 20px 0;
+                border-radius: 10px;
+            }
+            
+            .hero__items {
+                height: 350px;
+                padding: 0 30px;
+                text-align: center;
+            }
+            
+            .hero__text {
+                margin: 0 auto;
+                text-align: center;
+            }
+            
+            .hero__text h2 {
+                font-size: 32px;
+            }
+            
+            .hero__text h6 {
+                font-size: 16px;
+            }
+            
+            .primary-btn {
+                padding: 12px 30px;
+            }
+            
+            .spice-element {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-tags {
+                gap: 10px;
+            }
+            
+            .category-tag {
+                padding: 6px 15px;
+                font-size: 14px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .hero__items {
+                height: 300px;
+                padding: 0 20px;
+            }
+            
+            .hero__text h2 {
+                font-size: 28px;
+            }
+            
+            .hero__text h6 {
+                font-size: 14px;
+            }
+            
+            .primary-btn {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+            
+            .owl-carousel .owl-dots {
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
     <!-- Flash Sales Section -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">Flash Sales</h2>
+            <h2 class="section-title">Flash Sale</h2>
             <div class="product-grid">
+                <%for(let i =0;i<product.length;i++){%>
                 <div class="product-card">
-                    <div class="product-image">Turmeric Powder</div>
+                       <div class="product-image"><a href="/productDetails?id=<%product[i]._id%>"></a>
+                                  <img class="default-img" src="/uploads/product-image/<%=product[i]?.productImage[0]%>"
+                                   alt="<%=product[i].productName%>">
+                              </a>
+                          </div>
                     <div class="product-info">
-                        <div class="product-name">Organic Turmeric Powder</div>
+                        <div class="product-name"><%= product[i].productName %></div>
                         <div class="product-price">
-                            <span class="current-price">$12.99</span>
-                            <span class="original-price">$18.99</span>
-                            <span class="discount">30% OFF</span>
+                            <span class="current-price">&#8377;<%= product[i].salePrice %></span>
+                            <span class="original-price">&#8377;<%= product[i].regularPrice %></span>
+                        <!-- <span class="discount">30% OFF</span> -->
                         </div>
                         <button class="add-to-cart">Add to Cart</button>
                     </div>
                 </div>
-                <div class="product-card">
-                    <div class="product-image">Red Chili</div>
-                    <div class="product-info">
-                        <div class="product-name">Premium Red Chili Powder</div>
-                        <div class="product-price">
-                            <span class="current-price">$8.99</span>
-                            <span class="original-price">$12.99</span>
-                            <span class="discount">25% OFF</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Black Pepper</div>
-                    <div class="product-info">
-                        <div class="product-name">Whole Black Peppercorns</div>
-                        <div class="product-price">
-                            <span class="current-price">$15.99</span>
-                            <span class="original-price">$22.99</span>
-                            <span class="discount">35% OFF</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Cinnamon</div>
-                    <div class="product-info">
-                        <div class="product-name">Ceylon Cinnamon Sticks</div>
-                        <div class="product-price">
-                            <span class="current-price">$19.99</span>
-                            <span class="original-price">$28.99</span>
-                            <span class="discount">40% OFF</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
+                
+                    <%}%>
                 </div>
             </div>
 
-            <!-- Category Tags -->
-            <div class="category-tags">
-                <a href="#" class="category-tag">Whole Spices</a>
-                <a href="#" class="category-tag">Ground Spices</a>
-                <a href="#" class="category-tag">Spice Blends</a>
-                <a href="#" class="category-tag">Organic Spices</a>
-                <a href="#" class="category-tag">Exotic Spices</a>
-                <a href="#" class="category-tag">Herbs</a>
+        <!-- Banner Section -->
+        <section class="hero">
+            <div class="hero__slider owl-carousel">
+                <div class="hero__items slide-1">
+                    <div class="spice-overlay">
+                        <div class="spice-element spice-1"><i class="fas fa-pepper-hot"></i></div>
+                        <div class="spice-element spice-2"><i class="fas fa-mortar-pestle"></i></div>
+                        <div class="spice-element spice-3"><i class="fas fa-seedling"></i></div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-7 col-md-8">
+                                <div class="hero__text">
+                                    <h6>Exotic Spice Collection</h6>
+                                    <h2>Discover the Finest Spices From Around the World</h2>
+                                    <p>Premium quality spices sourced directly from organic farms. Experience authentic flavors in your kitchen.</p>
+                                    <a href="#" class="primary-btn">Explore Spices <span class="arrow_right">→</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items slide-2">
+                    <div class="spice-overlay">
+                        <div class="spice-element spice-1"><i class="fas fa-fire"></i></div>
+                        <div class="spice-element spice-2"><i class="fas fa-leaf"></i></div>
+                        <div class="spice-element spice-3"><i class="fas fa-globe-asia"></i></div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-7 col-md-8">
+                                <div class="hero__text">
+                                    <h6>New Arrivals</h6>
+                                    <h2>Authentic Blends For Culinary Excellence</h2>
+                                    <p>Handcrafted spice blends that will transform your cooking and delight your taste buds.</p>
+                                    <a href="#" class="primary-btn">Shop Now <span class="arrow_right">→</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items slide-3">
+                    <div class="spice-overlay">
+                        <div class="spice-element spice-1"><i class="fas fa-pepper-hot"></i></div>
+                        <div class="spice-element spice-2"><i class="fas fa-mortar-pestle"></i></div>
+                        <div class="spice-element spice-3"><i class="fas fa-seedling"></i></div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-7 col-md-8">
+                                <div class="hero__text">
+                                    <h6>Organic Selection</h6>
+                                    <h2>100% Natural & Organic Spices</h2>
+                                    <p>Chemical-free spices grown with sustainable farming practices for health and flavor.</p>
+                                    <a href="#" class="primary-btn">Organic Collection <span class="arrow_right">→</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items slide-4">
+                    <div class="spice-overlay">
+                        <div class="spice-element spice-1"><i class="fas fa-fire"></i></div>
+                        <div class="spice-element spice-2"><i class="fas fa-leaf"></i></div>
+                        <div class="spice-element spice-3"><i class="fas fa-globe-asia"></i></div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-7 col-md-8">
+                                <div class="hero__text">
+                                    <h6>Special Discount</h6>
+                                    <h2>Get 20% Off On Premium Spices</h2>
+                                    <p>Limited time offer on our most popular spice collections. Stock up your pantry now!</p>
+                                    <a href="#" class="primary-btn">Shop Sale <span class="arrow_right">→</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- New Arrivals Section -->
+        <section class="section" style="background: #f8f8f8;">
+            <div class="container">
+                <h2 class="section-title">New Arrivals</h2>
+                <div class="product-grid">
+                    <%for(let i =0;i<product.length;i++){%>
+                    <div class="product-card">
+                        <div class="product-image"><a href="/productDetails?id=<%product[i]._id%>"></a>
+                                      <img class="default-img" src="/uploads/product-image/<%=product[i]?.productImage[0]%>"
+                                       alt="<%=product[i].productName%>">
+                                  </a></div>
+                        <div class="product-info">
+                            <div class="product-name"><%= product[i].productName %></div>
+                            <div class="product-price">
+                                <span class="current-price">&#8377;<%= product[i].salePrice %></span>
+                                 <span class="original-price">&#8377;<%= product[i].regularPrice %></span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                   
+                    <%}%>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Selling Products -->
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Best Selling Products</h2>
+                <div class="product-grid">
+                    <%for(let i =0;i<product.length;i++){%>
+                    <div class="product-card">
+                        <div class="product-image"><a href="/productDetails?id=<%product[i]._id%>"></a>
+                                      <img class="default-img" src="/uploads/product-image/<%=product[i]?.productImage[0]%>"
+                                       alt="<%=product[i].productName%>">
+                                  </a></div>
+                        <div class="product-info">
+                            <div class="product-name"><%= product[i].productName %></div>
+                            <div class="product-price">
+                                <span class="current-price">&#8377;<%= product[i].salePrice %></span>
+                                 <span class="original-price">&#8377;<%= product[i].regularPrice %></span>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                   
+                    <%}%>
+                </div>
+            </div>
+        </section>
+
+        <!-- JavaScript for Owl Carousel -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".hero__slider").owlCarousel({
+                    items: 1,
+                    loop: true,
+                    autoplay: true,
+                    autoplayTimeout: 5000,
+                    autoplayHoverPause: true,
+                    nav: false,
+                    dots: true,
+                    animateOut: 'fadeOut',
+                    smartSpeed: 1000
+                });
+            });
+        </script>
     </section>
-
-    <!-- New Arrivals Section -->
-    <section class="section" style="background: #f8f8f8;">
-        <div class="container">
-            <h2 class="section-title">New Arrivals</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-image">Saffron</div>
-                    <div class="product-info">
-                        <div class="product-name">Premium Saffron Threads</div>
-                        <div class="product-price">
-                            <span class="current-price">$89.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Star Anise</div>
-                    <div class="product-info">
-                        <div class="product-name">Whole Star Anise</div>
-                        <div class="product-price">
-                            <span class="current-price">$14.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Cardamom</div>
-                    <div class="product-info">
-                        <div class="product-name">Green Cardamom Pods</div>
-                        <div class="product-price">
-                            <span class="current-price">$24.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Ginger</div>
-                    <div class="product-info">
-                        <div class="product-name">Dried Ginger Powder</div>
-                        <div class="product-price">
-                            <span class="current-price">$11.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Best Selling Products -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title">Best Selling Products</h2>
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="product-image">Cumin Seeds</div>
-                    <div class="product-info">
-                        <div class="product-name">Whole Cumin Seeds</div>
-                        <div class="product-price">
-                            <span class="current-price">$9.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Coriander</div>
-                    <div class="product-info">
-                        <div class="product-name">Ground Coriander</div>
-                        <div class="product-price">
-                            <span class="current-price">$7.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Paprika</div>
-                    <div class="product-info">
-                        <div class="product-name">Sweet Paprika Powder</div>
-                        <div class="product-price">
-                            <span class="current-price">$6.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-image">Bay Leaves</div>
-                    <div class="product-info">
-                        <div class="product-name">Dried Bay Leaves</div>
-                        <div class="product-price">
-                            <span class="current-price">$5.99</span>
-                        </div>
-                        <button class="add-to-cart">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
 </body>
 
-<%- include("../../views/partials/user/footer") %> 
+<%- include("../../views/partials/user/footer") %>

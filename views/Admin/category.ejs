@@ -99,6 +99,19 @@
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: #fff;
     }
+    
+    /* Hide pagination when searching */
+    .pagination-hidden {
+      display: none !important;
+    }
+    
+    /* No results message */
+    .no-results {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-light);
+      font-style: italic;
+    }
   </style>
 </head>
 
@@ -108,8 +121,8 @@
   <header class="header">
     <h1 class="page-title">Category</h1>
     <div class="search-container">
-      <input type="text" class="search-input" placeholder="Search ...">
-      <button class="search-btn">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search ...">
+      <button class="search-btn" onclick="searchCategories()">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
           <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 
                    16 11.11 16 9.5 16 5.91 13.09 3 
@@ -164,19 +177,19 @@
                   <th>Status</th>
                   <th>Actions</th>
                   <th>Edit</th>
-                  <th>Delete</th>
+                  <!-- <th>Delete</th> -->
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="categoryTableBody">
                 <% cat.forEach((category, index) => { %>
-                  <tr>
+                  <tr class="category-row" data-name="<%= category.name.toLowerCase() %>" data-description="<%= category.description.toLowerCase() %>">
                     <td><%= index + 1 %></td>
                     <td><b><%= category.name %></b></td>
                     <td class="text-truncate" style="max-width: 250px;"><%= category.description %></td>
                     <td><%= category.categoryOffer ? category.categoryOffer + '%' : '0' %></td>
                     <td>
                       <% if (category.categoryOffer === 0) { %>
-                        <button class="btn btn-sm btn-gradient" onclick="addOffer('<%= category._id %>')">Add Offer</button>
+                        <button class="btn btn-sm btn-gradient" onclick="addOfferPrompt('<%= category._id %>')">Add Offer</button>
                       <% } else { %>
                         <button class="btn btn-sm btn-outline-danger" onclick="removeOffer('<%= category._id %>')">Remove</button>
                       <% } %>
@@ -190,24 +203,27 @@
                     </td>
                     <td>
                       <% if(category.isListed) { %>
-                        <a href="/admin/unlistCategory?id=<%=category._id%>" class="btn btn-danger btn-sm">Unlist</a>
+                        <a href="#" onclick="confirmUnlist('<%= category._id %>')" class="btn btn-danger btn-sm">Unlist</a>
                       <% } else { %>
-                        <a href="/admin/listCategory?id=<%=category._id%>" class="btn btn-success btn-sm">List</a>
+                        <a href="#" onclick="confirmList('<%= category._id %>')" class="btn btn-success btn-sm">List</a>
                       <% } %>
                     </td>
                     <td>
                       <a href="/admin/editCategory/<%= category._id %>" class="btn btn-info btn-sm">Edit</a>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button class="btn btn-sm btn-danger" onclick="deleteCategory('<%= category._id %>')">Delete</button>
-                    </td>
+                    </td> -->
                   </tr>
                 <% }) %>
               </tbody>
             </table>
+            <div id="noResults" class="no-results" style="display: none;">
+              No categories found matching your search.
+            </div>
           </div>
 
-          <div class="mt-4">
+          <div class="mt-4" id="paginationContainer">
             <nav aria-label="Page navigation">
               <ul class="pagination justify-content-center custom-pagination">
                 <% for (let i = 1; i <= totalPages; i++) { %>
@@ -225,5 +241,294 @@
 </body>
 
 <script>
+  // Store original category data for search functionality
+  const originalCategories = [];
+  document.querySelectorAll('.category-row').forEach(row => {
+    originalCategories.push({
+      element: row,
+      name: row.getAttribute('data-name'),
+      description: row.getAttribute('data-description')
+    });
+  });
 
+  // Handle form submission with SweetAlert confirmation
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    Swal.fire({
+      title: 'Create Category?',
+      text: 'Are you sure you want to create this category?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#6a11cb',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, create it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        event.target.submit();
+      }
+    });
+  }
+
+  // Search functionality - client-side filtering
+  function searchCategories() {
+    const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+    const noResults = document.getElementById('noResults');
+    const paginationContainer = document.getElementById('paginationContainer');
+    
+    if (searchTerm) {
+      // Hide pagination when searching
+      paginationContainer.classList.add('pagination-hidden');
+      
+      let foundResults = false;
+      
+      // Filter categories
+      originalCategories.forEach(category => {
+        const matches = category.name.includes(searchTerm) || 
+                        category.description.includes(searchTerm);
+        
+        if (matches) {
+          category.element.style.display = '';
+          foundResults = true;
+        } else {
+          category.element.style.display = 'none';
+        }
+      });
+      
+      // Show no results message if needed
+      if (!foundResults) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    } else {
+      // Show all categories and pagination when search is empty
+      originalCategories.forEach(category => {
+        category.element.style.display = '';
+      });
+      noResults.style.display = 'none';
+      paginationContainer.classList.remove('pagination-hidden');
+    }
+  }
+
+  // Allow pressing Enter to search
+  document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      searchCategories();
+    }
+  });
+
+  // Clear search when input is cleared
+  document.getElementById('searchInput').addEventListener('input', function(e) {
+    if (e.target.value === '') {
+      searchCategories();
+    }
+  });
+
+  // Add offer with prompt
+  function addOfferPrompt(categoryId) {
+    Swal.fire({
+      title: 'Add Offer',
+      input: 'number',
+      inputLabel: 'Offer Percentage',
+      inputPlaceholder: 'Enter offer percentage (e.g., 10 for 10%)',
+      inputAttributes: {
+        min: 1,
+        max: 100,
+        step: 1
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Add Offer',
+      confirmButtonColor: '#6a11cb',
+      cancelButtonColor: '#6c757d',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to enter a value!';
+        }
+        if (value < 1 || value > 100) {
+          return 'Please enter a value between 1 and 100!';
+        }
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        addOffer(categoryId, result.value);
+      }
+    });
+  }
+
+  // Add offer function
+  function addOffer(categoryId, offerValue) {
+    fetch('/admin/addCategoryOffer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        categoryId: categoryId,
+        offer: offerValue
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'Offer added successfully',
+          icon: 'success',
+          confirmButtonColor: '#6a11cb'
+        }).then(() => {
+          location.reload();
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data.message || 'Failed to add offer',
+          icon: 'error',
+          confirmButtonColor: '#6a11cb'
+        });
+      }
+    })
+    .catch(error => {
+      Swal.fire({
+        title: 'Error!',
+        text: 'An error occurred while adding the offer',
+        icon: 'error',
+        confirmButtonColor: '#6a11cb'
+      });
+    });
+  }
+
+  // Remove offer with confirmation
+  function removeOffer(categoryId) {
+    Swal.fire({
+      title: 'Remove Offer?',
+      text: 'Are you sure you want to remove this offer?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch('/admin/removeCategoryOffer', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            categoryId: categoryId
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            Swal.fire({
+              title: 'Removed!',
+              text: 'Offer has been removed',
+              icon: 'success',
+              confirmButtonColor: '#6a11cb'
+            }).then(() => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: data.message || 'Failed to remove offer',
+              icon: 'error',
+              confirmButtonColor: '#6a11cb'
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred while removing the offer',
+            icon: 'error',
+            confirmButtonColor: '#6a11cb'
+          });
+        });
+      }
+    });
+  }
+
+  // Confirm list action
+  function confirmList(categoryId) {
+    Swal.fire({
+      title: 'List Category?',
+      text: 'This will make the category visible to customers',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, list it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `/admin/listCategory?id=${categoryId}`;
+      }
+    });
+  }
+
+  // Confirm unlist action
+  function confirmUnlist(categoryId) {
+    Swal.fire({
+      title: 'Unlist Category?',
+      text: 'This will hide the category from customers',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, unlist it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `/admin/unlistCategory?id=${categoryId}`;
+      }
+    });
+  }
+
+  // Delete category with confirmation
+  function deleteCategory(categoryId) {
+    Swal.fire({
+      title: 'Delete Category?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/admin/deleteCategory?id=${categoryId}`, {
+          method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Category has been deleted',
+              icon: 'success',
+              confirmButtonColor: '#6a11cb'
+            }).then(() => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: data.message || 'Failed to delete category',
+              icon: 'error',
+              confirmButtonColor: '#6a11cb'
+            });
+          }
+        })
+        .catch(error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred while deleting the category',
+            icon: 'error',
+            confirmButtonColor: '#6a11cb'
+          });
+        });
+      }
+    });
+  }
 </script>

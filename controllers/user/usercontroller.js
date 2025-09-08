@@ -1,4 +1,6 @@
 const User = require("../../models/userSchema");
+const Category= require("../../models/categorySchema");
+const Product = require("../../models/productSchema");
 const env = require("dotenv").config();
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
@@ -23,20 +25,45 @@ const pageNotFound = async (req,res) => {
 }
 
 const loadHomepage = async (req, res) => {
-    try {
-        if(req.session.user){
-console.log("The load home pateess",req.session.user)
-        return res.render("home",{user:req.session.user});
-        }else{
-            return res.render("home")
-        }
+//     try {
+//         if(req.session.user){
 
-            
+// console.log("The load home pateess",req.session.user)
+//         return res.render("home",{user:req.session.user});
+//         }else{
+//             delete req.session.user;
+//             return res.render("home")
+//         }
+
+            try{
+                const user = req.session.user;
+                const Categories = await Category.find({isListed:true});
+               
+                let productData = await Product.find(
+                    {isBlocked:false,
+                        category:{$in:Categories.map(category=>category._id)},quantity:{$gt:0}
+                    }
+                )
+
+                console.log(productData)
+
+                //productData.sort((a,b)=>new Data(b.createdAt)-new Data(a.createdAt));
+              //  productData = productData.slice(0,4);
+                console.log(productData);
+
+                if(user){
+                    const userData = await User.findOne({_id: user._id});
+                    return res.render("home",{userData,product:productData});
+                }else{
+                    return res.render("home",{product:productData});
+                }
     } catch (error) {
         console.log("Home page not found:", error);
         res.status(500).send("Server Error");
     }
-}
+};
+
+
 
 function generateOtp() {
     return Math.floor(100000 + Math.random() * 900000).toString();
@@ -93,7 +120,7 @@ const signup = async (req, res) => {
         req.session.userOtp = otp;
         req.session.userData = { firstname,lastname, phone, email, password };
 
-        // Render the OTP verification page here
+        // Render the OTP verification page 
         res.render("verify-otp", { message: "" }); 
         console.log("OTP sent:", otp);
 
@@ -135,6 +162,7 @@ const verifyOtp = async (req, res) => {
             await saveUserData.save();
 
             req.session.user = saveUserData;
+         
 
             // Clear the OTP and userData from session after successful verification
             delete req.session.userOtp;

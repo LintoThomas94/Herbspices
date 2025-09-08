@@ -4,7 +4,7 @@ const fs = require("fs");
 
 const uploadPath = path.join(__dirname, "../public/project/upload/re-image");
 
-// make sure folder exists
+// folder exists
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }

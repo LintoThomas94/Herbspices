@@ -26,7 +26,7 @@ const login = async (req, res) => {
         console.log(passwordMatch);
 
         if (passwordMatch) {
-            req.session.admin = true;
+            req.session.admin = admin;
             return res.redirect("/admin/dashboard");
         } else {
             return res.redirect("/admin-login");
