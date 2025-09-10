@@ -24,6 +24,8 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom:2px #333;
+            height: 120px;
         }
 
         .header-container {
@@ -497,8 +499,8 @@
             <div class="logo">Herbs&Spices</div>
             <nav>
                 <ul class="nav-menu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#shop">Shop</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/shop">Shop</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -508,7 +510,7 @@
                 <a href="#cart" class="cart-icon">Cart (0)</a>
                 <!-- Stylish signup/login buttons with conditional display -->
                 <div class="auth-buttons">
-                    <% if (typeof user !== "undefined" && user) { %>
+                    <% if (user) { %>
                         <div class="user-dropdown">
                             <button class="user-dropdown-btn">
                                 <div class="user-icon">👤</div>
@@ -534,14 +536,16 @@
                 </div>
             </div>
         </div>
-    <!-- Hero Section -->
+    <!-- Hero Section
 <section class="hero">
   <div class="hero-content">
     <h1>Spices & Ingredients</h1>
     <p>Premium quality spices from around the world</p>
     <a href="#shop" class="cta-button">Shop Now</a>
   </div>
-</section>
-
+</section> -->
+    </header>
+    </body>
+</html>
 
    

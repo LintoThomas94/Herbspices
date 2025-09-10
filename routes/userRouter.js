@@ -1,9 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport"); 
+const passport = require('passport');
 const usercontroller = require('../controllers/user/usercontroller');
 const profileController =require("../controllers/user/profileController");
+require("../config/passport"); 
 
+
+router.use((req,res,next)=>{
+    if(req.session.user){
+        res.locals.user = req.session.user
+    }else{
+        res.locals.user = null;
+    }
+    next();
+})
 
 //error management
 router.get('/pageNotFound', usercontroller.pageNotFound);
@@ -19,17 +29,17 @@ router.get('/auth/google',passport.authenticate('google',{scope:['profile','emai
 // });
 
 //google signup
-router.get("/auth/google/callback", 
-    passport.authenticate("google", { failureRedirect: "/signup" }),
-    async (req, res) => {
-        // storing session manimually
-        console.log(req.user)
-        req.session.user = req.user;
-        
-         res.render("home",{user:req.user});
-       // res.send("Your are sign with google")
-    }
-);
+router.get("/auth/google/callback",[
+  passport.authenticate('google', {
+    session: false,
+    failureRedirect: '/user/login?error=blocked'
+  }),
+  (req, res) => {
+    req.session.user = req.user
+    res.redirect('/');
+  }
+]);
+
 //Login management
 router.get("/login",usercontroller.loadLogin);
  router.post("/login",usercontroller.login);
@@ -38,6 +48,11 @@ router.get("/login",usercontroller.loadLogin);
 //Home page and shoping page
 router.get('/',usercontroller.loadHomepage);
 router.get("/logout",usercontroller.logout);
+router.get("/shop",usercontroller.loadShoppingPage);
+router.get("/filter",usercontroller.filterProduct);
+router.get("/filterPrice",usercontroller.filterByPrice);
+
+
 
 //Profile management
 router.get("/forgot-password",profileController.getForgotpassPage);

@@ -7,12 +7,7 @@ const env = require("dotenv").config();
 passport.use(new GoogleStrategy({
     clientID:process.env.GOOGLE_CLIENT_ID,
     clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-callbackURL: "http://localhost:3000/auth/google/callback"
-
-
-
-},
-
+callbackURL: "http://localhost:3000/auth/google/callback"},
 async(accessToken,refreshToken,profile,done)=>{
     try {
         
@@ -20,8 +15,7 @@ async(accessToken,refreshToken,profile,done)=>{
         if(user){
             return done(null,user);
         }else{
-            let temp =profile.displayName.split(" ");
-            
+            let temp = profile.displayName.split(" ");
             user = new User({
             firstname:temp[0],
             secondname:temp[1],

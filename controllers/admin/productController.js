@@ -54,9 +54,11 @@ const statusUpdate = async (req,res) => {
 
 
     if(product.status == 'Available'){
-      product.status = 'Discontinued'
+      product.status = 'Discontinued';
+      product.isBlocked = true;
     }else{
-            product.status = 'Available'
+            product.status = 'Available';
+            product.isBlocked = false;
     }
 
 
@@ -139,7 +141,7 @@ const addProducts = async (req, res) => {
     });
 
     await newProduct.save();
-    return res.redirect("/admin/addProducts"); 
+    return res.status(200).json({message: 'product added successfulyy'})
   } catch (error) {
     console.error("Error saving product", error);
     return res.redirect("/admin/pageerror");
@@ -214,7 +216,7 @@ if (!product) {
             }
         });
 
-        res.json({
+        res.status(200).json({
             message: 'Product updated successfully',
             product: updatedProduct
         });

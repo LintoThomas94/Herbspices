@@ -17,7 +17,27 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+                 .bannerHero {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+              url('/project/images/img\ -\ banner.jpg'); 
+   background-size: cover;
+  background-position: center;
+  height: 500px;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+.bannerHero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.bannerHero p {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+}
         body {
             background-color: #f9f9f9;
             color: #333;
@@ -464,6 +484,10 @@
             .hero__text h6 {
                 font-size: 14px;
             }
+    
+
+
+
             
             .primary-btn {
                 padding: 10px 25px;
@@ -477,6 +501,15 @@
     </style>
 </head>
 <body>
+     <!-- Hero Section -->
+<section class="bannerHero">
+  <div class="bannerHero-content">
+    <h1>Spices & Ingredients</h1>
+    <p>Premium quality spices from around the world</p>
+    <a href="#shop" class="cta-button">Shop Now</a>
+  </div>
+</section>
+
     <!-- Flash Sales Section -->
     <section class="section">
         <div class="container">

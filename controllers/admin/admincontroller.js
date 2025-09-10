@@ -19,7 +19,7 @@ const login = async (req, res) => {
         const admin = await User.findOne({ email, isAdmin: true });
        
         if (!admin) {
-            return res.redirect("/admin-login");
+            return res.redirect("/admin/admin-login");
         }
 
         const passwordMatch = await bcrypt.compare(password, admin.password);
@@ -29,7 +29,7 @@ const login = async (req, res) => {
             req.session.admin = admin;
             return res.redirect("/admin/dashboard");
         } else {
-            return res.redirect("/admin-login");
+            return res.redirect("/admin/admin-login");
         }
 
     } catch (error) {
@@ -46,24 +46,36 @@ const loadDashboard = async (req, res) => {
             return res.redirect("/pageerror");
         }
     } else {
-        return res.redirect("/admin-login");
+        return res.redirect("/admin/admin-login");
     }
-};
+}
 
-const logout = async (req,res)=>{
-    try {
-      req.session.destroy(err=>{
-        if(err){
-            console.log("Error destroying session",err);
-            return res.redirect("/pageerror")
+
+    const logout = async(req,res)=>{
+        try {
+           delete req.session.admin
+           res.redirect("/admin/admin-login");
+        } catch (error) {
+
+            console.error(error);
         }
-        res.redirect("/admin/admin-login")
-      })  
-    } catch (error) {
-        console.log(("unexpected error during logout",error));
-        res.redirect("/pageerror")
     }
-};
+    
+
+// const logout = async (req,res)=>{
+//     try {
+//     //   req.session.destroy(err=>{
+//     //     if(err){
+//     //         console.log("Error destroying session",err);
+//     //         return res.redirect("/pageerror")
+//     //     }
+//         res.redirect("/admin/admin-login")
+//      // })  
+//     } catch (error) {
+//         console.log(("unexpected error during logout",error));
+//         res.redirect("/pageerror")
+//     }
+// };
 
 
 
