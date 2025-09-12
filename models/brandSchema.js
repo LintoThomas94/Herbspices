@@ -11,10 +11,6 @@ const brandSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  isListed: {
-    type: Boolean,
-    default: true
-  },
   isBlocked: {
     type: Boolean,
     default: false

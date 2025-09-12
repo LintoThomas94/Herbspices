@@ -35,7 +35,7 @@ router.get("/auth/google/callback",[
     failureRedirect: '/user/login?error=blocked'
   }),
   (req, res) => {
-    req.session.user = req.user
+    req.session.user = req.use
     res.redirect('/');
   }
 ]);

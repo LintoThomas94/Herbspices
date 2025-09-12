@@ -165,7 +165,7 @@ if (!product) {
         // Handle file uploads
         const newImages = [];
     if (req.files && req.files.length > 0) {
-      // Ensure upload directory exists
+      //  upload directory exists
       const uploadDir = path.join(__dirname, "../../public/uploads/product-image");
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });

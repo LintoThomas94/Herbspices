@@ -1,3 +1,5 @@
+
+
 const User = require("../../models/userSchema");
 const Category= require("../../models/categorySchema");
 const Product = require("../../models/productSchema");
@@ -308,7 +310,7 @@ console.log(brands)
 const filterProduct = async (req, res) => {
     try {
         const { category, brand, page = 1 } = req.query;
-        const user = req.user; // Assuming user comes from authentication middleware
+        const user = req.user; 
         const itemsPerPage = 6;
 
         // Build query for products

@@ -89,9 +89,9 @@ const listBrand = async (req, res) => {
 // Block Brand
 const unlistBrand = async (req, res) => {
   try {
-    await Brand.updateOne({ _id: req.query.id }, { $set: { isBlocked: true } });
+    await Brand.updateOne({ _id: req.query.id },{ $set: { isBlocked: true } });
     res.redirect("/admin/brands");
-  } catch (error) {
+  }catch (error) {
     console.error("Error blocking brand:", error.message);
     res.redirect("/admin/pageerror");
   }
