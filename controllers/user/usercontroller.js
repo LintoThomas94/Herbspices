@@ -40,6 +40,7 @@ const loadHomepage = async (req, res) => {
 
             try{
                 const user = req.session.user;
+                
                 const Categories = await Category.find({isListed:true});
                
                 let productData = await Product.find(

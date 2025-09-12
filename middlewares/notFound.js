@@ -1,3 +1,3 @@
 module.exports = (req, res) => {
-  res.status(404).render("pageError");
+  res.status(NOT_FOUND).render("pageError");
 };
